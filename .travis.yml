@@ -1,5 +1,12 @@
 language: java
 jdk:
   - oraclejdk8
+before_script:
+  - export SPARK_HOME="$HOME/spark/spark-home"
+  - export SPARK_JAR=$SPARK_HOME/lib/spark-assembly.jar
+  - ./setup_test_env.sh
 script:
   mvn clean verify
+cache:
+  - $SPARK_HOME
+  - $SPARK_JAR
