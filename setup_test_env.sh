@@ -2,6 +2,9 @@
 
 if [ ! -d "$SPARK_HOME" ]; then
 
+    echo mkdir -p $SPARK_HOME
+    mkdir -p $SPARK_HOME
+
     echo curl -o $SPARK_HOME/spark.tar.gz -L http://archive.apache.org/dist/spark/spark-1.6.2/spark-1.6.2-bin-hadoop2.6.tgz
     curl -o $SPARK_HOME/spark.tar.gz -L http://archive.apache.org/dist/spark/spark-1.6.2/spark-1.6.2-bin-hadoop2.6.tgz
 
