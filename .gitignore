@@ -1,1 +1,11 @@
 target
+
+.idea/libraries
+.idea/copyright
+.idea/compiler.xml
+.idea/misc.xml
+.idea/workspace.xml
+
+/spark-manager.iml
+/job-manager/job-manager.iml
+/test-app/test-app.iml
