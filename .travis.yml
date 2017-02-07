@@ -4,6 +4,7 @@ jdk:
 before_script:
   - export SPARK_HOME="$HOME/spark/spark-home"
   - export SPARK_JAR=$SPARK_HOME/lib/spark-assembly.jar
+  - chmod 777 ./setup_test_env.sh
   - ./setup_test_env.sh
 script:
   mvn clean verify
