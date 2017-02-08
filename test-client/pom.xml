@@ -4,19 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>spark-manager</artifactId>
-        <groupId>com.sid</groupId>
+        <groupId>com.sid.spark-manager</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>test-app</artifactId>
+    <artifactId>test-client</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.10</artifactId>
-            <version>1.6.1</version>
-            <scope>provided</scope>
+            <groupId>com.sid.spark-manager</groupId>
+            <artifactId>client-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
