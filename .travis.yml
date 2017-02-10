@@ -8,6 +8,8 @@ before_script:
   - ./setup_test_env.sh
 script:
   mvn clean verify
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 1a6f1b96-14e9-4dbe-b250-316a4ea3795f
 cache:
   - $SPARK_HOME
   - $SPARK_JAR
