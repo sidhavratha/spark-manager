@@ -21,25 +21,25 @@ public class YarnClusterIT {
     @BeforeClass
     static public void setup() throws Exception {
         miniYarnCluster = MiniClusterUtil.createMiniYARNCluster(1);
-        YarnConfiguration appConf = new YarnConfiguration(miniYarnCluster.getConfig());
-        SparkJobManager.init(appConf, "../app/target/app-1.0-SNAPSHOT.jar");
     }
 
     @AfterClass
     static public void teardown() throws Exception {
-        SparkJobManager.reset();
         miniYarnCluster.stop();
         miniYarnCluster.close();
     }
 
     @Test
     public void testMiniYarnCluster() throws UnknownHostException {
-
+        SparkJobManager jobManager = new SparkJobManagerFactory.YarnSparkJobManagerFactory(
+                new YarnConfiguration(miniYarnCluster.getConfig()),
+                "../app/target/app-1.0-SNAPSHOT.jar"
+        ).build();
         HashMap<String, String> sparkConfMap = new HashMap<>();
         sparkConfMap.put("spark.testing.reservedMemory", "50000000");
-        SparkJobManager jobManager = SparkJobManager.createContext("context1", sparkConfMap);
+        SparkContextHandle contextHandle = jobManager.createContext("context1", sparkConfMap);
         try {
-            jobManager.addJar(new FileInputStream("../test-client/target/test-client-1.0-SNAPSHOT.jar"));
+            contextHandle.addJar(new FileInputStream("../test-client/target/test-client-1.0-SNAPSHOT.jar"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -47,15 +47,15 @@ public class YarnClusterIT {
         {
             HashMap<String, String> params = new HashMap<>();
             params.put("values", "1,2,3,4,5");
-            String response = jobManager.submitApp("com.sid.client.test.TestClientApplication", params);
+            String response = contextHandle.submitApp("com.sid.client.test.TestClientApplication", params);
             assertEquals("15", response);
 
             params.put("values", "1,2,3,4,5,6");
-            response = jobManager.submitApp("com.sid.client.test.TestClientApplication", params);
+            response = contextHandle.submitApp("com.sid.client.test.TestClientApplication", params);
             assertEquals("21", response);
         }
         finally {
-            jobManager.stopApplication();
+            contextHandle.stopApplication();
         }
         System.out.println("Completed");
     }
